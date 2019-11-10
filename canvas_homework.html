@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Drawing Area</title>
+<!-- You can add your style here rather than in an external style sheet. -->
+<style>
+	canvas {
+	    border:5px solid #d3d3d3;
+	    background-color: #f1f1f1;
+	    display: block;
+    }
+</style>
+</head>
+<body>
+    <!-- DO NOT MODIFY THIS HTML -->
+    <canvas id = "myCanvas" width = "350" height = "500"></canvas>
+    <input type = "color" id = "picker"/>
+    
+    
+    <script>
+            var canvas = document.querySelector("#myCanvas");
+            var ctx = canvas.getContext("2d");
+            var cp = document.getElementById('picker');
+            var drawing = true;
+
+
+            draw();
+            resizeCanvas();
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth * .8;
+                canvas.height = window.innerHeight * .8;
+            }
+            function draw(posX, posY){
+                if (drawing == true){
+                    console.log('I am drawing');
+                    ctx.beginPath();
+                    ctx.arc(posX-10, posY-10, 10, 0, 2 * Math.PI);
+                    ctx.fill();
+                }
+            }
+            
+            ctx.fillStyle = 'red';
+            myCanvas.addEventListener(
+                'mousemove', function (e) {
+                    console.log(e.x);
+                    console.log(e.y);
+                    draw(e.x, e.y);
+                }
+            )
+
+            window.addEventListener(
+                'keydown', function(e){
+                    console.log(e);
+                    if (event.key == 'b' || event.key == 'B'){
+                        console.log('you clicked b ... color is now blue');
+                        ctx.fillStyle = 'blue';
+                    }
+                    else if (event.key == 'g' || event.key == 'G'){
+                        console.log('you clicked g ... color is now green');
+                        ctx.fillStyle = 'green';
+                    }
+                    else if (event.key == 'r' || event.key == 'R'){
+                        console.log('you clicked r ... color is now red');
+                        ctx.fillStyle = 'red';
+                    }
+                    else if (event.key == 'y' || event.key == 'Y'){
+                        console.log('you clicked y ... color is now yellow');
+                        ctx.fillStyle = 'yellow';
+                    }
+                    if (event.key == ' '){
+                        console.log('you clicked space ... cleared canvas');
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    }
+                    if (event.key == 'ArrowUp'){
+                        console.log('you clicked the up arrow ... pen is lifted');
+                        drawing = false;
+                    }
+                    else if (event.key == 'ArrowDown'){
+                        console.log('you clicked the up arrow ... pen is lifted');
+                        drawing = true;
+                    }
+                }
+            )
+            window.addEventListener(
+                'change', function(e) {
+                    choice = cp.value;
+                    ctx.fillStyle = choice;
+                    ctx.strokeStyle = choice;
+                }
+                    
+            )
+            
+    
+        </script>
+</body>
+</html>
